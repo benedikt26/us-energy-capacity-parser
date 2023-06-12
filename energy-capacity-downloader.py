@@ -42,6 +42,7 @@ for year in range(start_year, end_year + 1):
                 
                 # Increment the successful runs counter
                 successful_runs += 1
+                print(file_name + " successfully downloaded")
                 
                 # Pause for a few seconds to avoid overloading the website
                 time.sleep(3)
