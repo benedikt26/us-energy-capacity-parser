@@ -32,6 +32,9 @@ for folder in os.listdir(folder_directory):
             state_value_2 = excel_data.iloc[53, 0]
             wind_capacity_2 = excel_data.iloc[53, 1]
             
+            # Convert the date value to the desired format
+            date_value = datetime.strptime(date_value, "%B %Y").strftime("%Y-%m")
+            
             # Add the data to the result DataFrame
             result_df = result_df.append({
                 "Date": date_value,
