@@ -1,11 +1,12 @@
 import os
+from datetime import datetime
 import pandas as pd
 
 # Specify the working directory containing the folders
-folder_directory = "path/to/working/directory"
+folder_directory = R"C:/Users/lechl/OneDrive - TUM/Hiwi/Jeana/Energy Capacities/Data"
 
 # Specify the result file path
-result_file = "path/to/result/file.xlsx"
+result_file = R"C:/Users/lechl/OneDrive - TUM/Hiwi/Jeana/Energy Capacities/Output/energy-capacities.xlsx"
 
 # Create an empty DataFrame for the result
 result_df = pd.DataFrame(columns=["Date", "State", "WindCapacity"])
@@ -25,8 +26,8 @@ for folder in os.listdir(folder_directory):
         
         try:
             # Open the Excel file and extract the required data
-            excel_data = pd.read_excel(file_path)
-            date_value = excel_data.iloc[3, 1]
+            excel_data = pd.read_excel(file_path, header=None)
+            date_value = str(excel_data.iloc[3, 1])
             state_value_1 = excel_data.iloc[61, 0]
             wind_capacity_1 = excel_data.iloc[61, 1]
             state_value_2 = excel_data.iloc[53, 0]
