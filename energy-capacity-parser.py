@@ -6,7 +6,8 @@ import pandas as pd
 folder_directory = R"C:/Users/lechl/OneDrive - TUM/Hiwi/Jeana/Energy Capacities/Data"
 
 # Specify the result file path
-result_file = R"C:/Users/lechl/OneDrive - TUM/Hiwi/Jeana/Energy Capacities/Output/energy-capacities.xlsx"
+result_file_xlsx = R"C:/Users/lechl/OneDrive - TUM/Hiwi/Jeana/Energy Capacities/Output/energy-capacities.xlsx"
+result_file_pkl = R"C:/Users/lechl/OneDrive - TUM/Hiwi/Jeana/Energy Capacities/Output/energy-capacities.pkl"
 
 # Create an empty DataFrame for the result
 result_df = pd.DataFrame(columns=["Date", "State", "WindCapacity"])
@@ -68,7 +69,8 @@ for folder in os.listdir(folder_directory):
             print(f"Error message: {str(e)}")
     
 # Save the result DataFrame to the specified file
-result_df.to_excel(result_file, index=False)
+result_df.to_excel(result_file_xlsx, index=False)
+result_df.to_pickle(result_file_pkl)
 
 # Display the statistics
 print("Processing complete.")
