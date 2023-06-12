@@ -25,29 +25,37 @@ for folder in os.listdir(folder_directory):
         file_path = os.path.join(folder_path, "Table_6_02_B.xlsx")
         
         try:
-            # Open the Excel file and extract the required data
-            excel_data = pd.read_excel(file_path, header=None)
-            date_value = str(excel_data.iloc[3, 1])
-            state_value_1 = excel_data.iloc[61, 0]
-            wind_capacity_1 = excel_data.iloc[61, 1]
-            state_value_2 = excel_data.iloc[53, 0]
-            wind_capacity_2 = excel_data.iloc[53, 1]
+            # Extract the month and year from the folder name
+            month = folder[:-4]
+            year = folder[-4:]
+            datecheck = pd.to_datetime(f"{month} {year}", format="%B %Y")
+
+            # Check whether it is a file of old format or of new format according to the folder name
+            if datecheck <= pd.to_datetime("October 2015"):
+                excel_data = pd.read_excel(file_path, header=None)
+            else:
+                excel_data = pd.read_excel(file_path)
+            
+            date_value = str(excel_data.iloc[2, 1])
+            state_value_1 = excel_data.iloc[60, 0]
+            wind_capacity_1 = excel_data.iloc[60, 1]
+            state_value_2 = excel_data.iloc[52, 0]
+            wind_capacity_2 = excel_data.iloc[52, 1]
             
             # Convert the date value to the desired format
             date_value = datetime.strptime(date_value, "%B %Y").strftime("%Y-%m")
             
-            # Add the data to the result DataFrame
-            result_df = result_df.append({
-                "Date": date_value,
-                "State": state_value_1,
-                "WindCapacity": wind_capacity_1
-            }, ignore_index=True)
-            
-            result_df = result_df.append({
-                "Date": date_value,
-                "State": state_value_2,
-                "WindCapacity": wind_capacity_2
-            }, ignore_index=True)
+            # Create a DataFrame from the extracted data
+            extracted_data_1 = pd.DataFrame({"Date": [date_value],
+                                        "State": [state_value_1],
+                                        "WindCapacity": [wind_capacity_1]})
+            extracted_data_2 = pd.DataFrame({"Date": [date_value],
+                                        "State": [state_value_2],
+                                        "WindCapacity": [wind_capacity_2]})
+
+            # Concatenate the extracted data with the result DataFrame
+            result_df = pd.concat([result_df, extracted_data_1], ignore_index=True)
+            result_df = pd.concat([result_df, extracted_data_2], ignore_index=True)
             
             # Increment the successful runs counter
             successful_runs += 1
