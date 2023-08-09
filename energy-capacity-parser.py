@@ -5,6 +5,7 @@ import pandas as pd
 # Specify the working directory containing the folders
 folder_directory = R"C:/Users/lechl/OneDrive - TUM/Hiwi/Jeana/Energy Capacities/Data"
 
+
 # Specify the result file path
 result_file_xlsx = R"C:/Users/lechl/OneDrive - TUM/Hiwi/Jeana/Energy Capacities/Output/energy-capacities.xlsx"
 result_file_pkl = R"C:/Users/lechl/OneDrive - TUM/Hiwi/Jeana/Energy Capacities/Output/energy-capacities.pkl"
