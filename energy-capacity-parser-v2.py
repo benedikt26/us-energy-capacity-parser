@@ -40,7 +40,8 @@ for folder in os.listdir(folder_directory):
                 excel_data = pd.read_excel(file_path)
             
             # Convert the date value to the desired format
-            date_value = datetime.strptime(f"{year}-{month}", "%Y-%B").strftime("%Y-%m")
+            date_value = str(excel_data.iloc[2, 1])
+            date_value = datetime.strptime(date_value, "%B %Y").strftime("%Y-%m")
             
             # Extract wind energy capacity values for all states (rows 5-64, excluding specific rows)
             state_wind_capacities = {}
@@ -52,6 +53,7 @@ for folder in os.listdir(folder_directory):
             
             # Create a DataFrame from the extracted data for the current month/year
             extracted_data = pd.DataFrame(state_wind_capacities, index=[date_value])
+            extracted_data.insert(0, "Date", date_value)  # Insert the "Date" column as the first column
             
             # Concatenate the extracted data with the result DataFrame
             result_df = pd.concat([result_df, extracted_data], ignore_index=False)
@@ -66,6 +68,9 @@ for folder in os.listdir(folder_directory):
             print(f"Error processing file: {file_path}")
             print(f"Error message: {str(e)}")
     
+# Sort the result DataFrame based on the "Date" column in ascending order
+result_df = result_df.sort_values(by="Date")
+
 # Save the result DataFrame to the specified file
 result_df.to_excel(result_file_xlsx, index=False)
 result_df.to_pickle(result_file_pkl)
